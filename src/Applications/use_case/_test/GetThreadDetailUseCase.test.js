@@ -6,10 +6,24 @@ const DetailThread = require('../../../Domains/threads/entities/DetailThread');
 const DetailComment = require('../../../Domains/comments/entities/DetailComment');
 
 describe('GetThreadDetailUseCase', () => {
+  /**
+   * Menghindari duplikasi date string dengan membuat helper function
+   */
+  const createFixedDate = () => new Date('2023-01-01T00:00:00.000Z');
+
+  it('should create valid date object for testing', () => {
+    // Arrange & Action
+    const fixedDate = createFixedDate();
+
+    // Assert
+    expect(fixedDate).toBeInstanceOf(Date);
+    expect(fixedDate.toISOString()).toBe('2023-01-01T00:00:00.000Z');
+  });
+
   it('should orchestrating the get thread detail action correctly', async () => {
     // Arrange
     const threadId = 'thread-123';
-    const fixedDate = new Date('2023-01-01T00:00:00.000Z');
+    const fixedDate = createFixedDate();
     const mockDetailThread = new DetailThread({
       id: 'thread-123',
       title: 'A thread',
@@ -83,7 +97,7 @@ describe('GetThreadDetailUseCase', () => {
   it('should group replies by comment_id correctly', async () => {
     // Arrange
     const threadId = 'thread-123';
-    const fixedDate = new Date('2023-01-01T00:00:00.000Z');
+    const fixedDate = createFixedDate();
     
     const mockReplies = [
       {

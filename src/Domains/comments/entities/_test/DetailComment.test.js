@@ -27,6 +27,21 @@ describe('DetailComment entities', () => {
     expect(() => new DetailComment(payload)).toThrowError('DETAIL_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
   });
 
+  it('should throw error when replies is not an array', () => {
+    // Arrange
+    const payload = {
+      id: 'comment-123',
+      username: 'johndoe',
+      date: new Date(),
+      content: 'A comment',
+      isDeleted: false,
+      replies: 'not an array',
+    };
+
+    // Action & Assert
+    expect(() => new DetailComment(payload)).toThrowError('DETAIL_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
+  });
+
   it('should create DetailComment entities correctly', () => {
     // Arrange
     const payload = {
@@ -46,6 +61,7 @@ describe('DetailComment entities', () => {
     expect(detailComment.username).toEqual(payload.username);
     expect(detailComment.date).toEqual(payload.date);
     expect(detailComment.content).toEqual(payload.content);
+    expect(detailComment.replies).toEqual([]);
   });
 
   it('should create DetailComment entities with deleted content when isDeleted is true', () => {
@@ -67,5 +83,6 @@ describe('DetailComment entities', () => {
     expect(detailComment.username).toEqual(payload.username);
     expect(detailComment.date).toEqual(payload.date);
     expect(detailComment.content).toEqual('**komentar telah dihapus**');
+    expect(detailComment.replies).toEqual([]);
   });
 }); 

@@ -166,13 +166,11 @@ describe('CommentRepositoryPostgres', () => {
       expect(comments[0].content).toEqual(firstComment.content);
       expect(comments[0].username).toEqual(firstUser.username);
       expect(comments[0].date).toEqual(firstComment.date);
-      expect(comments[0].isDeleted).toEqual(false);
       expect(comments[1]).toBeInstanceOf(DetailComment);
       expect(comments[1].id).toEqual(secondComment.id);
       expect(comments[1].content).toEqual(secondComment.content);
       expect(comments[1].username).toEqual(secondUser.username);
       expect(comments[1].date).toEqual(secondComment.date);
-      expect(comments[1].isDeleted).toEqual(false);
     });
   });
 

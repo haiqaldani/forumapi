@@ -44,4 +44,41 @@ describe('DeleteCommentUseCase', () => {
     expect(mockCommentRepository.deleteComment)
       .toBeCalledWith(useCasePayload.commentId);
   });
+
+  it('should throw error when payload not contain needed property', async () => {
+    // Arrange
+    const deleteCommentUseCase = new DeleteCommentUseCase({});
+
+    // Action & Assert
+    await expect(deleteCommentUseCase.execute({}))
+      .rejects.toThrowError('DELETE_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY');
+    await expect(deleteCommentUseCase.execute({ threadId: 'thread-123' }))
+      .rejects.toThrowError('DELETE_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY');
+    await expect(deleteCommentUseCase.execute({ threadId: 'thread-123', commentId: 'comment-123' }))
+      .rejects.toThrowError('DELETE_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY');
+  });
+
+  it('should throw error when payload not meet data type specification', async () => {
+    // Arrange
+    const deleteCommentUseCase = new DeleteCommentUseCase({});
+
+    // Action & Assert
+    await expect(deleteCommentUseCase.execute({
+      threadId: 123,
+      commentId: 'comment-123',
+      owner: 'user-123',
+    })).rejects.toThrowError('DELETE_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
+    
+    await expect(deleteCommentUseCase.execute({
+      threadId: 'thread-123',
+      commentId: 123,
+      owner: 'user-123',
+    })).rejects.toThrowError('DELETE_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
+    
+    await expect(deleteCommentUseCase.execute({
+      threadId: 'thread-123',
+      commentId: 'comment-123',
+      owner: 123,
+    })).rejects.toThrowError('DELETE_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
+  });
 }); 

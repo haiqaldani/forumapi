@@ -1,4 +1,4 @@
-name: CD - Deploy to AWS EC2 with CodeDeploy
+name: Continuous Delivery - Deploy to AWS EC2 with CodeDeploy
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: CI
+name: Continuous Integration - Run Tests and Lint
 
 on:
   pull_request:
@@ -11,14 +11,14 @@ jobs:
 
     env:
       NODE_ENV: test
-      PGHOST: ${{ secrets.RDS_HOST_TEST }}
-      PGPORT: ${{ secrets.RDS_PORT_TEST}}
-      PGUSER: ${{ secrets.RDS_USERNAME_TEST }}
-      PGPASSWORD: ${{ secrets.RDS_PASSWORD_TEST }}
-      PGDATABASE: ${{ secrets.RDS_DATABASE_TEST }}
+      PGHOST: ${{ secrets.RDS_HOST}}
+      PGPORT: ${{ secrets.RDS_PORT}}
+      PGUSER: ${{ secrets.RDS_USERNAME}}
+      PGPASSWORD: ${{ secrets.RDS_PASSWORD}}
+      PGDATABASE: ${{ secrets.RDS_DATABASE}}
       ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
       REFRESH_TOKEN_KEY: ${{ secrets.REFRESH_TOKEN_KEY }}
-      ACCESS_TOKEN_AGE: 3000
+      ACCESS_TOKEN_AGE: ${{ secrets.REFRESH.ACCESS_TOKEN_AGE }}
 
     steps:
     - name: Checkout code

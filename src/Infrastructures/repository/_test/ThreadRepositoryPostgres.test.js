@@ -138,13 +138,16 @@ describe('ThreadRepositoryPostgres', () => {
       const threadDetail = await threadRepositoryPostgres.getDetailThread('thread-123');
 
       // Assert
-      expect(threadDetail).toBeInstanceOf(DetailThread);
-      expect(threadDetail.id).toEqual(threadData.id);
-      expect(threadDetail.title).toEqual(threadData.title);
-      expect(threadDetail.body).toEqual(threadData.body);
-      expect(threadDetail.username).toEqual(user.username);
-      expect(threadDetail.date).toEqual(threadData.date);
-      expect(threadDetail.comments).toEqual([]);
+      const expectedThreadDetail = new DetailThread({
+        id: threadData.id,
+        title: threadData.title,
+        body: threadData.body,
+        username: user.username,
+        date: threadData.date,
+        comments: [],
+      });
+
+      expect(threadDetail).toStrictEqual(expectedThreadDetail);
     });
   });
 });

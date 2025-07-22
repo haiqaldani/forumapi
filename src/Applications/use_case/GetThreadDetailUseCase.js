@@ -1,3 +1,5 @@
+const ThreadDetail = require('../../Domains/threads/entities/ThreadDetail');
+
 class GetThreadDetailUseCase {
   constructor({ threadRepository, commentRepository, replyRepository }) {
     this._threadRepository = threadRepository;
@@ -26,8 +28,14 @@ class GetThreadDetailUseCase {
       });
     }
     
-    thread.comments = comments;
-    return thread;
+    return new ThreadDetail({
+      id: thread.id,
+      title: thread.title,
+      body: thread.body,
+      date: thread.date,
+      username: thread.username,
+      comments,
+    });
   }
 }
 

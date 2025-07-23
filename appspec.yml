@@ -3,10 +3,14 @@ os: linux
 files:
   - source: /
     destination: /home/ubuntu/forumapi
-    overwrite: yes
+    file_exists_behavior: overwrite
 hooks:
   BeforeInstall:
     - location: scripts/install_dependencies.sh
+      timeout: 300
+      runas: root
+  AfterInstall:
+    - location: scripts/after_install.sh
       timeout: 300
       runas: root
   ApplicationStart:

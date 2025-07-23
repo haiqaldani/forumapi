@@ -35,4 +35,4 @@
     "node-pg-migrate": "^6.2.2",
     "nodemon": "^3.0.1"
   }
-} 
+}

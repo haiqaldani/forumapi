@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ec2-user/forumapi
+    destination: /home/ubuntu/forumapi
     overwrite: yes
 hooks:
   BeforeInstall:
@@ -12,8 +12,8 @@ hooks:
   ApplicationStart:
     - location: scripts/start_server.sh
       timeout: 300
-      runas: ec2-user
+      runas: ubuntu
   ApplicationStop:
     - location: scripts/stop_server.sh
       timeout: 300
-      runas: ec2-user
+      runas: ubuntu

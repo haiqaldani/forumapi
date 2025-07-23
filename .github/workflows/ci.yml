@@ -18,7 +18,7 @@ jobs:
       PGDATABASE: ${{ secrets.RDS_DATABASE}}
       ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
       REFRESH_TOKEN_KEY: ${{ secrets.REFRESH_TOKEN_KEY }}
-      ACCESS_TOKEN_AGE: ${{ secrets.REFRESH.ACCESS_TOKEN_AGE }}
+      ACCESS_TOKEN_AGE: ${{ secrets.ACCESS_TOKEN_AGE }}
       NODE_TLS_REJECT_UNAUTHORIZED: 0
       PGSSLMODE: require
 

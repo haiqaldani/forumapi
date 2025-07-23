@@ -4,8 +4,19 @@ cd /home/ubuntu/forumapi
 # Install production dependencies
 npm ci --production
 
-# Run database migrations
-npm run migrate up
+# Set NODE_ENV if not already set
+if [ -z "$NODE_ENV" ]; then
+    export NODE_ENV=production
+fi
+
+# Run database migrations with SSL support
+if [ "$NODE_ENV" = "production" ]; then
+    echo "Running production migrations with SSL..."
+    npm run migrate:prod up
+else
+    echo "Running development migrations..."
+    npm run migrate up
+fi
 
 # Stop existing PM2 process if running
 pm2 stop forumapi || true

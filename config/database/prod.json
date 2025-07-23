@@ -3,5 +3,9 @@
   "password": "your_production_password",
   "host": "localhost",
   "port": 5432,
-  "database": "forumapi"
+  "database": "forumapi",
+  "ssl": {
+    "ca": "./config/global-bundle.pem",
+    "rejectUnauthorized": false
+  }
 }

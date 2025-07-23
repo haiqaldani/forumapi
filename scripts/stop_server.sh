@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /home/ec2-user/forumapi
+cd /home/ubuntu/forumapi
 pm2 stop forumapi || true

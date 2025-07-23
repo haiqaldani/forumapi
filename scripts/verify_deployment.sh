@@ -34,10 +34,28 @@ echo "5. Environment check:"
 if [ -f .env ]; then
     echo "✅ .env file exists"
     echo ".env file contents (excluding secrets):"
-    grep -E "^(HOST|PORT|NODE_ENV)=" .env || echo "Basic environment variables not found in .env"
+    grep -E "^(HOST|PORT|NODE_ENV|PGHOST|PGDATABASE)=" .env || echo "Basic environment variables not found in .env"
 else
     echo "❌ .env file not found"
     echo "Please create .env file based on .env.example"
+fi
+
+echo
+echo "6. Database connectivity check:"
+if [ -f .env ]; then
+    source .env
+    if command -v psql > /dev/null; then
+        if PGPASSWORD=$PGPASSWORD psql -h $PGHOST -p $PGPORT -U $PGUSER -d $PGDATABASE -c "SELECT 1;" > /dev/null 2>&1; then
+            echo "✅ Database connection successful"
+        else
+            echo "❌ Database connection failed"
+            echo "Check your database credentials and ensure PostgreSQL is running"
+        fi
+    else
+        echo "⚠️  psql not available, skipping database connection test"
+    fi
+else
+    echo "❌ Cannot test database - .env file not found"
 fi
 
 echo

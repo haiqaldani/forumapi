@@ -1,6 +1,5 @@
 const Hapi = require('@hapi/hapi');
 const Jwt = require('@hapi/jwt');
-const rateLimiter = require('./rateLimiter');
 const ClientError = require('../../Commons/exceptions/ClientError');
 const DomainErrorTranslator = require('../../Commons/exceptions/DomainErrorTranslator');
 const users = require('../../Interfaces/http/api/users');
@@ -20,13 +19,6 @@ const createServer = async (container) => {
   await server.register([
     {
       plugin: Jwt,
-    },
-    {
-      plugin: rateLimiter,
-      options: {
-        max: 90,
-        windowMs: 60 * 1000,
-      },
     },
   ]);
 

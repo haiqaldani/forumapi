@@ -5,21 +5,10 @@ class HelloHandler {
     this.getHelloHandler = this.getHelloHandler.bind(this);
   }
 
-  async getHelloHandler(request) {
-    const { name } = request.query;
-    
-    if (!name) {
-      return {
-        status: 'fail',
-        message: 'Name parameter is required',
-      };
-    }
-
+  async getHelloHandler() {
     return {
       status: 'success',
-      data: {
-        message: `Hello, ${name}!`,
-      },
+      message: 'Hello World!',
     };
   }
 }

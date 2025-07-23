@@ -1,10 +1,9 @@
-const ThreadDetail = require('../../Domains/threads/entities/ThreadDetail');
-
 class GetThreadDetailUseCase {
-  constructor({ threadRepository, commentRepository, replyRepository }) {
+  constructor({ threadRepository, commentRepository, replyRepository, commentLikesRepository }) {
     this._threadRepository = threadRepository;
     this._commentRepository = commentRepository;
     this._replyRepository = replyRepository;
+    this._commentLikesRepository = commentLikesRepository;
   }
 
   async execute(threadId) {
@@ -23,19 +22,27 @@ class GetThreadDetailUseCase {
         return acc;
       }, {});
       
-      comments.forEach(comment => {
+      // Get like counts for all comments
+      const commentLikeCounts = {};
+      for (const comment of comments) {
+        commentLikeCounts[comment.id] = await this._commentLikesRepository.getCommentLikeCount(comment.id);
+      }
+      
+      // Set replies and like counts for each comment
+      for (const comment of comments) {
         comment.replies = repliesGroupedByCommentId[comment.id] || [];
-      });
+        // Create a new property since DetailComment objects are immutable after construction
+        Object.defineProperty(comment, 'likeCount', {
+          value: commentLikeCounts[comment.id],
+          writable: false,
+          enumerable: true,
+          configurable: false
+        });
+      }
     }
     
-    return new ThreadDetail({
-      id: thread.id,
-      title: thread.title,
-      body: thread.body,
-      date: thread.date,
-      username: thread.username,
-      comments,
-    });
+    thread.comments = comments;
+    return thread;
   }
 }
 

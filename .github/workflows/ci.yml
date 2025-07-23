@@ -19,6 +19,8 @@ jobs:
       ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
       REFRESH_TOKEN_KEY: ${{ secrets.REFRESH_TOKEN_KEY }}
       ACCESS_TOKEN_AGE: ${{ secrets.REFRESH.ACCESS_TOKEN_AGE }}
+      NODE_TLS_REJECT_UNAUTHORIZED: 0
+      PGSSLMODE: require
 
     steps:
     - name: Checkout code
@@ -34,7 +36,7 @@ jobs:
       run: npm ci
 
     - name: Run database migrations
-      run: npm run migrate:test up
+      run: npm run migrate up
 
     - name: Run tests
       run: npm test
